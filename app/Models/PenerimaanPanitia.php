@@ -102,4 +102,15 @@ class PenerimaanPanitia extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+    public function event()
+{
+    return $this->hasOneThrough(
+        Event::class,
+        PendaftarPanitia::class,
+        'id', // Foreign key on PendaftarPanitia table
+        'id', // Foreign key on Event table
+        'pendaftaran_panitia_id', // Local key on PenerimaanPanitia table
+        'event_id' // Local key on PendaftarPanitia table
+    );
+}
 }
