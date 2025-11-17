@@ -35,7 +35,7 @@ class PresensiController extends Controller
                 })->first();
             }
         } else { // panitia
-            $query = PenerimaanPanitia::with(['daftarHadir', 'pendaftaranPanitia', 'event'])
+            $query = PenerimaanPanitia::with(['daftarHadir', 'pendaftarPanitia', 'event'])
                 ->whereHas('event', function ($q) use ($request) {
                     $q->where('kode_event', $request->kode_event);
                 });
@@ -43,7 +43,7 @@ class PresensiController extends Controller
             if ($request->filled('id')) {
                 $penerimaan = $query->find($request->id);
             } elseif ($request->filled('kode')) {
-                $penerimaan = $query->whereHas('pendaftaranPanitia', function ($q) use ($request) {
+                $penerimaan = $query->whereHas('pendaftarPanitia', function ($q) use ($request) {
                     $q->where('kode_panitia', $request->kode);
                 })->first();
             }
