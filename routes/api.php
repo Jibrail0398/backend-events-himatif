@@ -120,6 +120,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/index',[DaftarHadirPesertaController::class,'index']);
         });
 
+        Route::prefix('kehadiran-panitia')->group(function(){
+            Route::get('/index',[DaftarHadirPanitiaController::class,'index']);
+        });
+
     });
 
     Route::middleware('auth.jwt:admin,mentor,peserta,panitia')->group(function () {

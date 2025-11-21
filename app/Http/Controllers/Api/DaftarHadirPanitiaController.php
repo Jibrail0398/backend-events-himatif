@@ -89,4 +89,30 @@ class DaftarHadirPanitiaController extends Controller
             'message' => 'Tipe presensi tidak valid (gunakan datang/pulang)'
         ], 400);
     }
+
+
+    public function index(){
+        $data = DaftarHadirPanitia::with([
+            'penerimaanPanitia.pendaftarPanitia:id,kode_panitia,nama,NIM,email',
+            'penerimaanPanitia.pendaftarPanitia.event:id,nama_event,kode_event'
+        ])->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'presensi_datang' => $item->presensi_datang,
+                    'waktu_presensi_datang' => $item->waktu_presensi_datang,
+                    'presensi_pulang' => $item->presensi_pulang,
+                    'waktu_presensi_pulang' => $item->waktu_presensi_pulang,
+                    'peserta' => $item->penerimaanPanitia->pendaftarPanitia ?? null,
+                    'event' => $item->penerimaanPanitia->pendaftarPanitia->event ?? null
+                ];
+            })
+        ]);
+    }
+
+
+
 }
