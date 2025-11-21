@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Mail\QrCodeMail;
 use App\Models\DaftarHadirPanitia;
+use App\Models\Event;
 
 class PenerimaanPanitia extends Model
 {
