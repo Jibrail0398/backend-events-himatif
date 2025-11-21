@@ -92,7 +92,7 @@ class DaftarHadirPesertaController extends Controller
     }
 
     public function index(){
-        $data = DaftarHadirPanitia::with([
+        $data = DaftarHadirPeserta::with([
             'penerimaanPanitia.pendaftarPanitia:id,kode_panitia,nama,NIM,email,divisi',
             'penerimaanPanitia.pendaftarPanitia.event:id,nama_event,kode_event'
         ])->get();
