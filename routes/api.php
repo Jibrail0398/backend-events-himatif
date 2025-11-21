@@ -7,7 +7,7 @@ use App\Http\Middleware\AuthJWT;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\PendaftarPesertaController;
 use App\Http\Controllers\Api\PenerimaanPesertaController;
-use App\Http\Controllers\Api\DaftarHadirController;
+use App\Http\Controllers\Api\DaftarHadirPesertaController;
 use App\Http\Controllers\Api\PresensiController;
 use App\Http\Controllers\Api\DaftarHadirPanitiaController;
 use App\Http\Controllers\Api\PendaftarPanitiaController;
@@ -114,6 +114,10 @@ Route::prefix('v1')->group(function () {
             Route::put('/update/{id}', [DokumentasiController::class, 'update']);
             Route::delete('/delete/{id}', [DokumentasiController::class, 'destroy']);
             Route::get('/event/{eventId}', [DokumentasiController::class, 'getByEvent']);
+        });
+
+        Route::prefix('kehadiran-peserta')->group(function(){
+            Route::get('/index',[DaftarHadirPesertaController::class,'index']);
         });
 
     });

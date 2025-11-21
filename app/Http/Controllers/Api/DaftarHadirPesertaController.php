@@ -7,13 +7,15 @@ use App\Models\DaftarHadirPeserta;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class DaftarHadirController extends Controller
+
+class DaftarHadirPesertaController extends Controller
 {
     /**
      * Scan QR peserta untuk presensi otomatis.
      *
      * @param int $id ID DaftarHadirPeserta
      */
+    
     public function scanPresensi($id)
     {
         $daftar = DaftarHadirPeserta::with('penerimaanPeserta.pendaftarPeserta.event')->find($id);
@@ -88,4 +90,27 @@ class DaftarHadirController extends Controller
             ]
         ], 400);
     }
+
+    public function index(){
+        $data = DaftarHadirPeserta::with([
+            'penerimaanPeserta.pendaftarPeserta:id,kode_peserta,nama,NIM,email',
+            'penerimaanPeserta.pendaftarPeserta.event:id,nama_event,kode_event'
+        ])->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'presensi_datang' => $item->presensi_datang,
+                    'waktu_presensi_datang' => $item->waktu_presensi_datang,
+                    'presensi_pulang' => $item->presensi_pulang,
+                    'waktu_presensi_pulang' => $item->waktu_presensi_pulang,
+                    'peserta' => $item->penerimaanPeserta->pendaftarPeserta ?? null,
+                    'event' => $item->penerimaanPeserta->pendaftarPeserta->event ?? null
+                ];
+            })
+        ]);
+    }
+
 }
