@@ -93,8 +93,8 @@ class DaftarHadirPesertaController extends Controller
 
     public function index(){
         $data = DaftarHadirPeserta::with([
-            'penerimaanPeserta.pendaftarPeserta:id,kode_peserta,nama,NIM,email',
-            'penerimaanPeserta.pendaftarPeserta.event:id,nama_event,kode_event'
+            'penerimaanPeserta.pendaftarPeserta:id,kode_peserta,nama,NIM,email,event_id',
+            
         ])->get();
 
         return response()->json([
@@ -107,7 +107,7 @@ class DaftarHadirPesertaController extends Controller
                     'presensi_pulang' => $item->presensi_pulang,
                     'waktu_presensi_pulang' => $item->waktu_presensi_pulang,
                     'peserta' => $item->penerimaanPeserta->pendaftarPeserta ?? null,
-                    'event' => $item->penerimaanPeserta->pendaftarPeserta->event ?? null
+                    'event_id' => $item->penerimaanPeserta->pendaftarPeserta->event_id ?? null
                 ];
             })
         ]);

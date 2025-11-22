@@ -93,8 +93,7 @@ class DaftarHadirPanitiaController extends Controller
 
     public function index(){
         $data = DaftarHadirPanitia::with([
-            'penerimaanPanitia.pendaftarPanitia:id,kode_panitia,nama,NIM,email',
-            'penerimaanPanitia.pendaftarPanitia.event:id,nama_event,kode_event'
+            'penerimaanPanitia.pendaftarPanitia:id,kode_panitia,nama,NIM,email,event_id',
         ])->get();
 
         return response()->json([
@@ -107,7 +106,7 @@ class DaftarHadirPanitiaController extends Controller
                     'presensi_pulang' => $item->presensi_pulang,
                     'waktu_presensi_pulang' => $item->waktu_presensi_pulang,
                     'peserta' => $item->penerimaanPanitia->pendaftarPanitia ?? null,
-                    'event' => $item->penerimaanPanitia->pendaftarPanitia->event ?? null
+                    'event' => $item->penerimaanPanitia->pendaftarPanitia->event_id ?? null
                 ];
             })
         ]);
